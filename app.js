@@ -37,6 +37,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/artist-search', (req, res) => {
+    // variavel que guarda o que foi escrito no input
     let artistFromForm = req.query.artist;
 
     spotifyApi.searchArtists(artistFromForm)
@@ -48,6 +49,27 @@ app.get('/artist-search', (req, res) => {
   })
   .catch(err => console.log('The error while searching artists occurred: ', err));
 
+});
+
+app.get('/albums/:artistId', (req, res) =>{
+    let artistId = req.params.artistId; // vai buscar o ID da route que pusemos no botão
+
+    spotifyApi.getArtistAlbums(artistId).then((data) => {
+       // console.log('received data', data.body)
+        let albumsResults = data.body.items;
+        res.render('albums', {albums: albumsResults});
+    }); 
+});
+
+app.get('/tracks/:tracksId', (req, res) => {
+    let tracksId = req.params.tracksId;
+
+    spotifyApi.getAlbumTracks(tracksId).then((data) =>{
+        console.log('received data', data.body)
+        let albumTracks = data.body.items;
+
+        res.render('tracks', {tracks: albumTracks});
+    })
 });
 
 
