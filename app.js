@@ -30,7 +30,7 @@ spotifyApi
 
 // Our routes go here:
 app.get('/', (req, res) => {
-    console.log('where on index')
+    // console.log('where on index')
     
     res.render('index');
 });
